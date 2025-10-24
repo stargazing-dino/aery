@@ -20,6 +20,7 @@ use crate::relation::{CleanupPolicy, Relation, ZstOrPanic};
 
 // Small Stable Unique Vec
 #[derive(Reflect)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub(crate) struct SSUVec<T: PartialEq> {
     pub vec: SmallVec<[T; 1]>,
 }
@@ -105,10 +106,12 @@ pub(crate) fn clean_recursive<R: Relation>(mut world: DeferredWorld, id: Entity,
 
 #[derive(Deref, DerefMut, Reflect)]
 #[reflect(Component, MapEntities, type_path = false, where R: Relation)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub(crate) struct Hosts<R: Relation> {
     #[deref]
     pub(crate) vec: SSUVec<Entity>,
     #[reflect(ignore)]
+    #[cfg_attr(feature = "serde", serde(skip))]
     _phantom: PhantomData<R>,
 }
 
@@ -163,10 +166,12 @@ impl<R: Relation> Component for Hosts<R> {
 
 #[derive(Deref, DerefMut, Reflect)]
 #[reflect(Component, MapEntities, type_path = false, where R: Relation)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub(crate) struct Targets<R: Relation> {
     #[deref]
     pub(crate) vec: SSUVec<Entity>,
     #[reflect(ignore)]
+    #[cfg_attr(feature = "serde", serde(skip))]
     _phantom: PhantomData<R>,
 }
 
