@@ -19,9 +19,13 @@ bevy_hierarchy = "0.14"
 bevy_reflect = "0.14"
 bevy_log = "0.14"
 bevy_utils = "0.14"
-smallvec = "1.11.0"
+smallvec = { version = "1.11.0", features = ["serde"] }
 aery_macros = { path = "macros", version = "0.3.0-dev" }
 aquamarine = "0.3.2"
+serde = { version = "1.0", optional = true, features = ["derive"] }
+
+[features]
+serde = ["dep:serde", "smallvec/serde", "bevy_ecs/serialize"]
 
 [dev-dependencies]
 bevy = "0.14"
