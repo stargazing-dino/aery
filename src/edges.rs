@@ -296,6 +296,15 @@ impl<E: EdgeInfo> EdgeInfo for Option<E> {
     }
 }
 
+/// Returns the TypeIds for edge storage components (Hosts<R> and Targets<R>).
+/// Useful for filtering these internal types from UI/reflection systems.
+pub fn edge_storage_type_ids<R: Relation>() -> [std::any::TypeId; 2] {
+    [
+        std::any::TypeId::of::<Hosts<R>>(),
+        std::any::TypeId::of::<Targets<R>>(),
+    ]
+}
+
 /// Filter to find roots of a relationship graph.
 /// An entity is a root of `R` if:
 /// - It is targeted by atleast one other entity via `R`.
